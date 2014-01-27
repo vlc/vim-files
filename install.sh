@@ -7,7 +7,7 @@ fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ln -s ${DIR}/vimrc ~/.vimrc
-ln -s ${DIR}/vim ~/.vim
+ln -s ${DIR} ~/.vim
 mkdir -p ~/.vim/bundle
 
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
