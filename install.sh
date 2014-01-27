@@ -5,9 +5,9 @@ if [ -d ~/.vim ] || [ -f ~/.vimrc ]; then
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cp ${DIR}/vimrc ~/.vimrc
+ln -s ${DIR}/vimrc ~/.vimrc
+ln -s ${DIR}/vim ~/.vim
 mkdir -p ~/.vim/bundle
-cp ${DIR}/vim/* ~/.vim/
 
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 vim +BundleInstall +qall
