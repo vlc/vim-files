@@ -2,6 +2,7 @@
 
 if [ -d ~/.vim ] || [ -f ~/.vimrc ]; then
   echo "Can't overwrite an existing installation. Please move .vim and .vimrc out of the way manually"
+  exit 1
 fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
