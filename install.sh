@@ -13,5 +13,8 @@ git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 vim +BundleInstall +qall
 
 # Compile YouCompleteMe - which should have been installed by the bundleInstall command above
+if [[ "`uname`" == 'Linux' ]]; then
+  sudo apt-get install cmake python-dev
+fi
 cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer
 
