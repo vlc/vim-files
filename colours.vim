@@ -2,7 +2,10 @@ syntax enable
 Bundle 'altercation/vim-colors-solarized'
 let g:solarized_termcolors=256
 set t_Co=256
-colorscheme solarized
+
+" Don't prompt the user when it can't find the colorscheme (as you can't when
+" first running BundleInstall)
+silent! colorscheme solarized
 set background=dark
 
 if !has("gui") && has("terminfo")
