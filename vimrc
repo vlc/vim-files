@@ -13,10 +13,24 @@ filetype off                  " required!
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 Bundle 'gmarik/vundle'
-filetype plugin indent on     " required!
-
 Bundle "tpope/vim-sensible"
+Bundle "tpope/vim-surround"
 Bundle "rking/ag.vim"
+Bundle "derekwyatt/vim-scala"
+Bundle "vim-ruby/vim-ruby"
+Bundle "Markdown"
+
+Bundle 'dag/vim2hs'
+Bundle 'merijn/haskellFoldIndent'
+Bundle 'eagletmt/neco-ghc'
+Bundle 'eagletmt/ghcmod-vim'
+" Dependency of ghcmod-vim
+Bundle 'eagletmt/tinytest'
+" Dependency of ghcmod-vim
+Bundle 'Shougo/vimproc'
+
+" enable filetype detection:
+filetype plugin indent on
 " -----------------------------------------------------------------------------
 
 let mapleader = ","
@@ -62,14 +76,19 @@ endif " has("autocmd")
 " auto correct
 ab teh the
 
+" Unbind the cursor keys in insert, normal and visual modes.
+for prefix in ['i', 'n', 'v']
+  for key in ['<Up>', '<Down>', '<Left>', '<Right>']
+    exe prefix . "noremap " . key . " <Nop>"
+  endfor
+endfor
+inoremap <esc> <NOP>
 
-" Scala tests
-map <leader>t :w<cr>:!sbt test<cr>
 
 " buffer navigation like a BOSS!
 nnoremap <C-n> :w<cr>:bn<cr>
 nnoremap <C-p> :w<cr>:bN<cr>
-nnoremap <C-w> :w<cr>:bd<cr>
+" nnoremap <C-w> :w<cr>:bd<cr>
 inoremap <C-n> <ESC>:w<cr>:bn<cr>i
 inoremap <C-p> <ESC>:w<cr>:bN<cr>i
 
@@ -129,8 +148,7 @@ set wrap                          " long lines wrap and continue on the next lin
 set title
 set visualbell
 set noerrorbells
-set mouse-=a
-set mousehide
+set mouse=a
 set bs=indent,eol,start           " allow backspacing over everything in insert mode
 set incsearch                     " show the `best match so far' as search strings are typed:
 map <leader><space> :noh<cr>      " Easily remove search highlighting
@@ -158,15 +176,15 @@ endif
 " have further <Tab>s cycle through the possibilities:
 set wildmode=list:longest,full
 
-" enable filetype detection:
-filetype on
-
 " Languages
-Bundle "derekwyatt/vim-scala"
-" so ~/.dot-files/files/.vim/bundle/vim-scala/ftdetect/scala.vim
-Bundle "vim-ruby/vim-ruby"
-Bundle "Markdown"
 
+" Functional tests
+autocmd FileType scala noremap <leader>t :w<cr>:!sbt test<cr>
+" autocmd FileType haskell noremap <leader>t :w<cr>:!ghc % -o run_me<cr>:!./run_me<cr>
+autocmd FileType haskell noremap <leader>t :w<cr>:!doctest %<cr>
+autocmd FileType haskell noremap <buffer> <F2> :GhcModType<CR>
+autocmd FileType haskell noremap <buffer> <silent> <F3> :GhcModTypeClear<CR>
+autocmd FileType haskell noremap <leader>T :w<CR>:GhcModTypeInsert<CR>
 
 " for Perl programming, have things in braces indenting themselves:
 autocmd FileType perl set smartindent
@@ -191,6 +209,23 @@ autocmd BufEnter */debian/rules set noet ts=8 sw=8
 
 " for C-like programming, have automatic indentation:
 autocmd FileType c,cpp,slang set cindent
+
+" Haskell
+au FileType haskell noremap <buffer> <F2> :GhcModType<CR>
+au FileType haskell noremap <buffer> <silent> <F3> :GhcModTypeClear<CR>
+au FileType haskell setlocal number
+au FileType haskell setlocal foldmethod=manual
+au FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+au BufNewFile,BufRead *.dump-cmm set filetype=c
+au BufNewFile,BufRead *.hs,*.hsc,*.lhs,*.dump-simpl set filetype=haskell
+au BufNewFile,BufRead *.lhs set syntax=lhaskell
+
+autocmd BufWritePost *.hs GhcModCheckAndLintAsync
+autocmd BufWritePost *.hsc GhcModCheckAndLintAsync
+
+let g:syntastic_haskell_checkers = ["ghc_mod","hlint"]
+
 
 " Commenting blocks of code.
 autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
@@ -217,7 +252,8 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
-:nmap <C-h> :%s/\s\+$//e<cr> " ctl-h removes trailing white space from all lines in the file
+nnoremap <leader>rts :%s/\s\+$//e<cr> " removes trailing white space from all lines in the file
+nnoremap <leader>rt  :%s/\t/  /e<cr> " replace tabs with (2) spaces
 
 " Find all files in all non-dot directories starting in the working directory.
 " Fuzzy select one of those. Open the selected file with :e.
