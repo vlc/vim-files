@@ -118,6 +118,10 @@ set backspace=indent,eol,start    " how backspace works at start of line
 set cursorline                    " rule a line under the cursor position
 set encoding=utf-8                " encoding used internally
 set expandtab                     " use spaces when <Tab> is inserted
+set smarttab
+set softtabstop=2                 " number of spaces that <Tab> uses while editing
+set shiftwidth=2                  " number of spaces to use for (auto)indent step
+set tabstop=2                     " number of spaces that <Tab> in file use
 set fileencodings=utf-8           " automatically detected character encodings
 set foldcolumn=2                  " width of the column used to indicate folds
 set foldenable                    " set to display all folds open
@@ -137,13 +141,8 @@ set number                        " print the line number in front of each line
 set ruler                         " show cursor line and column in the status line
 set scrolloff=2                   " minimum nr. of lines above and below cursor
 set shiftround                    " round indent to multiple of shiftwidth
-set expandtab
-set smarttab
 let &colorcolumn=join(range(121,999),",")
 highlight ColorColumn ctermbg=8 guibg=#2c2d27
-set softtabstop=2                 " number of spaces that <Tab> uses while editing
-set shiftwidth=2                  " number of spaces to use for (auto)indent step
-set tabstop=2                     " number of spaces that <Tab> in file use
 set viewoptions=folds	            " save folding state for views
 set wrap                          " long lines wrap and continue on the next line
 set title
