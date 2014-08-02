@@ -54,6 +54,7 @@ runtime colours.vim
 
 " autocompletion and shit ------------------
 runtime autocomplete.vim
+runtime buffer_cycle.vim
 " ------------------------------------------
 
 " Only do this part when compiled with support for autocommands.
@@ -84,13 +85,11 @@ for prefix in ['i', 'n', 'v']
 endfor
 inoremap <esc> <NOP>
 
-
 " buffer navigation like a BOSS!
-nnoremap <C-n> :w<cr>:bn<cr>
-nnoremap <C-p> :w<cr>:bN<cr>
-" nnoremap <C-w> :w<cr>:bd<cr>
-inoremap <C-n> <ESC>:w<cr>:bn<cr>i
-inoremap <C-p> <ESC>:w<cr>:bN<cr>i
+nnoremap <C-n> :call SwitchToNextBuffer(1)<CR>
+nnoremap <C-p> :call SwitchToNextBuffer(-1)<CR>
+inoremap <C-n> <ESC>:bn<cr>i
+inoremap <C-p> <ESC>:bN<cr>i
 
 " Tab navigation like a BOSS!
 nnoremap <C-t> :tabnew<cr>
@@ -114,6 +113,7 @@ nnoremap <silent> <C-Left> :wincmd h<CR>
 nnoremap <silent> <C-Right> :wincmd l<CR>
 
 set autoindent                    " take indent for new line from previous line
+set autowriteall
 set backspace=indent,eol,start    " how backspace works at start of line
 set cursorline                    " rule a line under the cursor position
 set encoding=utf-8                " encoding used internally
@@ -153,7 +153,7 @@ set mouse=a
 set bs=indent,eol,start           " allow backspacing over everything in insert mode
 set incsearch                     " show the `best match so far' as search strings are typed:
 map <leader><space> :noh<cr>      " Easily remove search highlighting
-set pastetoggle=<F2>              " paste without trying to re-indent
+set pastetoggle=<TAB>              " paste without trying to re-indent
 
 nmap <leader>l :set list!<CR>     " Shortcut to rapidly toggle `set list` (ie show whitespace)
 set listchars=tab:▸\ ,eol:¬       " Use the same symbols as TextMate for tabstops and EOLs
@@ -181,7 +181,7 @@ set wildmode=list:longest,full
 
 " Functional tests
 autocmd FileType scala noremap <leader>t :w<cr>:!sbt test<cr>
-" autocmd FileType haskell noremap <leader>t :w<cr>:!ghc % -o run_me<cr>:!./run_me<cr>
+autocmd FileType haskell noremap <leader>r :w<cr>:!ghc % -o run_me<cr>:!./run_me<cr>
 autocmd FileType haskell noremap <leader>t :w<cr>:!doctest %<cr>
 autocmd FileType haskell noremap <buffer> <F2> :GhcModType<CR>
 autocmd FileType haskell noremap <buffer> <silent> <F3> :GhcModTypeClear<CR>
