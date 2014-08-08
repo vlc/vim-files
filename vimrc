@@ -88,8 +88,8 @@ inoremap <esc> <NOP>
 " buffer navigation like a BOSS!
 nnoremap <C-n> :call SwitchToNextBuffer(1)<CR>
 nnoremap <C-p> :call SwitchToNextBuffer(-1)<CR>
-inoremap <C-n> <ESC>:bn<cr>i
-inoremap <C-p> <ESC>:bN<cr>i
+inoremap <C-n> <ESC>:call SwitchToNextBuffer(1)<cr>i
+inoremap <C-p> <ESC>:call SwitchToNextBuffer(-1)<cr>i
 
 " Tab navigation like a BOSS!
 nnoremap <C-t> :tabnew<cr>
