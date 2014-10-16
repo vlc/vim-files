@@ -6,7 +6,7 @@ set t_Co=256
 " Don't prompt the user when it can't find the colorscheme (as you can't when
 " first running BundleInstall)
 silent! colorscheme solarized
-set background=light
+set background=dark
 
 if !has("gui") && has("terminfo")
   set t_AB=[%?%p1%{8}%<%t%p1%{40}%+%e%p1%{92}%+%;%dm

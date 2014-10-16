@@ -178,6 +178,9 @@ set wildmode=list:longest,full
 
 " Languages
 
+" Ruby
+autocmd FileType ruby noremap <leader>r :w<cr>:!ruby % <cr>
+
 " Functional tests
 autocmd FileType scala noremap <leader>t :w<cr>:!sbt test<cr>
 autocmd FileType haskell noremap <leader>r :w<cr>:!ghc % -o run_me<cr>:!./run_me<cr>
