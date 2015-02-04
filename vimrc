@@ -20,6 +20,7 @@ Bundle "derekwyatt/vim-scala"
 Bundle "vim-ruby/vim-ruby"
 Bundle "Markdown"
 
+Bundle "Shougo/neocomplete"
 Bundle 'dag/vim2hs'
 Bundle 'merijn/haskellFoldIndent'
 Bundle 'eagletmt/neco-ghc'
@@ -28,6 +29,7 @@ Bundle 'eagletmt/ghcmod-vim'
 Bundle 'eagletmt/tinytest'
 " Dependency of ghcmod-vim
 Bundle 'Shougo/vimproc'
+
 
 " enable filetype detection:
 filetype plugin indent on
